@@ -5,6 +5,7 @@ import com.pacheco.game.component.GraphicComponent;
 import com.pacheco.game.component.PositionComponent;
 import com.pacheco.game.core.Box;
 import com.pacheco.game.core.Position;
+import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
 import javafx.scene.canvas.GraphicsContext;
@@ -18,7 +19,7 @@ public class GraphicSystem {
         this.entityPool = entityPool;
     }
 
-    public void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc, Transform transform) {
         gc.setTransform(1, 0, 0, 1, 0, 0);
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
@@ -28,14 +29,15 @@ public class GraphicSystem {
                 if (entity.containsComponent(PositionComponent.class)) {
                     PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
                     Position position = positionComponent.getPosition();
-                    gc.setTransform(1, 0, 0, 1, position.x, position.y);
+                    Transform posTransform = new Transform(transform).translate(position);
+                    posTransform.apply(gc);
                 }
                 entity.getComponent(GraphicComponent.class).render(gc);
             }
-        };
+        }
 
         // render bounding box
-        gc.setTransform(1, 0, 0, 1, 0, 0);
+        /*transform.apply(gc);
         for (Entity entity : entityPool.getEntities()) {
             if (entity.containsComponent(GraphicComponent.class)) {
                 if (entity.containsComponent(PositionComponent.class) &&
@@ -48,6 +50,6 @@ public class GraphicSystem {
                     gc.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top);
                 }
             }
-        };
+        }*/
     }
 }

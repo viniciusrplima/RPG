@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 
 public class App extends Application
 {
-    private static final int WND_WIDTH = 800;
-    private static final int WND_HEIGHT = 600;
+    private static final int WND_WIDTH = 1200;
+    private static final int WND_HEIGHT = 960;
     private static final String GAME_TITLE = "RPG";
 
     @Override

@@ -3,8 +3,10 @@ package com.pacheco.game;
 import com.pacheco.game.component.*;
 import com.pacheco.game.core.Box;
 import com.pacheco.game.core.Position;
+import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
+import com.pacheco.game.map.MapBuilder;
 import com.pacheco.game.system.GraphicSystem;
 import com.pacheco.game.system.PhysicSystem;
 import javafx.scene.canvas.Canvas;
@@ -12,7 +14,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
-import org.graalvm.compiler.lir.alloc.trace.DefaultTraceRegisterAllocationPolicy;
 
 public class Game {
 
@@ -29,9 +30,13 @@ public class Game {
     }
 
     public void start() {
+        SpritesHolder.loadSprites();
+
         entityPool = new EntityPool();
         graphicSystem = new GraphicSystem(entityPool);
         physicSystem = new PhysicSystem(entityPool);
+
+        new MapBuilder().build(entityPool);
 
         player = new Entity();
         player.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.RED, 100, 100));
@@ -43,26 +48,27 @@ public class Game {
         wall.setComponent(PositionComponent.class, new PositionComponent(50, 50));
         wall.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 150, 80));
 
-        Entity solidWall = new Entity();
-        solidWall.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.BROWN, 150, 80));
-        solidWall.setComponent(PositionComponent.class, new PositionComponent(400, 150));
-        solidWall.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 150, 80, BoundingBoxType.SOLID));
-
         entityPool.addEntity(player);
         entityPool.addEntity(wall);
-        entityPool.addEntity(solidWall);
+
     }
 
     public void update(double elapsedSeconds) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         physicSystem.update(elapsedSeconds);
-        graphicSystem.render(gc);
 
         Position playerPos = player.getComponent(PositionComponent.class).getPosition();
         Box playerBB = player.getComponent(BoundingBoxComponent.class).getBox();
 
+        Transform transform = new Transform();
+        transform.translate(playerPos.multiply(-1));
+        transform.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
+
+        graphicSystem.render(gc, transform);
+
         // print player status
+        new Transform().apply(gc);
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(1.0f);
         gc.strokeText(String.format("Player Position: %.2f, %.2f", playerPos.x, playerPos.y), 10, 20);
