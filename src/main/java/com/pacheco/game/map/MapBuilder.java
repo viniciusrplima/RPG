@@ -2,28 +2,9 @@ package com.pacheco.game.map;
 
 import com.pacheco.game.SpritesHolder;
 import com.pacheco.game.entity.EntityPool;
+import com.pacheco.game.util.ResourceUtil;
 
 public class MapBuilder {
-
-    private static final String mapString = "" +
-            "wwwww.........wwwww.....wwww\n" +
-            "wwwww.........wwwww........w\n" +
-            "w..........................w\n" +
-            "w..................r.......w\n" +
-            "w.....r....................\n" +
-            "w..........................\n" +
-            "w..........................\n" +
-            "w.........wwww.............\n" +
-            "w..........................\n" +
-            "w....rr....................\n" +
-            "w..........................\n" +
-            "w.........rrrrr............\n" +
-            "w..........................\n" +
-            "w..........................\n" +
-            "w.....r............r.......\n" +
-            "w..........................\n" +
-            "w..........................\n" +
-            "wwwwwwwwwwwwwwwwwwwwwwwwwww";
 
     private TileFactory tileFactory;
 
@@ -35,7 +16,12 @@ public class MapBuilder {
         tileFactory = new TileFactory(offsetW, offsetH, cellW, cellH);
     }
 
-    public void build(EntityPool entityPool) {
+    public void buildFromFile(EntityPool entityPool, String mapfile) {
+        String mapString = ResourceUtil.getContentFromResource(mapfile);
+        build(entityPool, mapString);
+    }
+
+    public void build(EntityPool entityPool, String mapString) {
         int column = 0;
         int line = 0;
         for (int i = 0; i < mapString.length(); i++) {

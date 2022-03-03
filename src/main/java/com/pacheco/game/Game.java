@@ -36,7 +36,7 @@ public class Game {
         graphicSystem = new GraphicSystem(entityPool);
         physicSystem = new PhysicSystem(entityPool);
 
-        new MapBuilder().build(entityPool);
+        new MapBuilder().buildFromFile(entityPool, "src/main/resources/maps/default.map");
 
         player = new Entity();
         player.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.RED, 100, 100));
