@@ -3,7 +3,7 @@ package com.pacheco.game.component;
 import com.pacheco.game.core.Position;
 
 public class PositionComponent implements Component {
-    private Position position;
+    public Position position;
 
     public PositionComponent(double x, double y) {
         position = new Position(x, y);
@@ -17,7 +17,4 @@ public class PositionComponent implements Component {
         move(offset.x, offset.y);
     }
 
-    public Position getPosition() {
-        return position;
-    }
 }

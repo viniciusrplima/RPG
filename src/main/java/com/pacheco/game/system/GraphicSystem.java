@@ -1,9 +1,7 @@
 package com.pacheco.game.system;
 
-import com.pacheco.game.component.BoundingBoxComponent;
 import com.pacheco.game.component.GraphicComponent;
 import com.pacheco.game.component.PositionComponent;
-import com.pacheco.game.core.Box;
 import com.pacheco.game.core.Position;
 import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.Entity;
@@ -28,7 +26,7 @@ public class GraphicSystem {
             if (entity.containsComponent(GraphicComponent.class)) {
                 if (entity.containsComponent(PositionComponent.class)) {
                     PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
-                    Position position = positionComponent.getPosition();
+                    Position position = positionComponent.position;
                     Transform posTransform = new Transform(transform).translate(position);
                     posTransform.apply(gc);
                 }
@@ -51,5 +49,6 @@ public class GraphicSystem {
                 }
             }
         }*/
+
     }
 }

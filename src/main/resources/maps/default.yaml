@@ -1,0 +1,18 @@
+playerInitialPos:
+  x: 27
+  y: 13
+doors:
+  - name: west1
+    playerPosition:
+      x: 9
+      y: 22
+    position:
+      x: 7
+      y: 22
+    box:
+      left: 0
+      top: 0
+      right: 0
+      bottom: 1
+    destinationMap: room1
+    destinationDoor: east1

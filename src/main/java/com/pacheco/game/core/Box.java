@@ -6,6 +6,9 @@ public class Box {
     public double right;
     public double bottom;
 
+    public Box() {
+    }
+
     public Box(double left, double top, double right, double bottom) {
         this.left = left;
         this.top = top;

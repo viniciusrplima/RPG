@@ -1,20 +1,19 @@
 package com.pacheco.game;
 
-import static org.junit.Assert.assertTrue;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.pacheco.game.map.MapModel;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
+import java.io.File;
+import java.io.IOException;
+
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() throws IOException {
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        MapModel mapModel = mapper.readValue(new File("src/main/resources/maps/default.yaml"), MapModel.class);
+        System.out.println(mapModel);
     }
 }

@@ -6,8 +6,8 @@ import com.pacheco.game.core.Position;
 import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
-import com.pacheco.game.map.MapBuilder;
 import com.pacheco.game.system.GraphicSystem;
+import com.pacheco.game.system.MapSystem;
 import com.pacheco.game.system.PhysicSystem;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,6 +22,7 @@ public class Game {
     private EntityPool entityPool;
     private GraphicSystem graphicSystem;
     private PhysicSystem physicSystem;
+    private MapSystem mapSystem;
 
     private Entity player;
 
@@ -33,33 +34,28 @@ public class Game {
         SpritesHolder.loadSprites();
 
         entityPool = new EntityPool();
+
         graphicSystem = new GraphicSystem(entityPool);
         physicSystem = new PhysicSystem(entityPool);
 
-        new MapBuilder().buildFromFile(entityPool, "src/main/resources/maps/default.map");
-
-        player = new Entity();
+        player = new Entity(9999999);
         player.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.RED, 100, 100));
         player.setComponent(PositionComponent.class, new PositionComponent(250, 250));
         player.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 100, 100));
 
-        Entity wall = new Entity();
-        wall.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.BLUE, 150, 80));
-        wall.setComponent(PositionComponent.class, new PositionComponent(50, 50));
-        wall.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 150, 80));
+        mapSystem = new MapSystem(entityPool, player);
 
         entityPool.addEntity(player);
-        entityPool.addEntity(wall);
-
     }
 
     public void update(double elapsedSeconds) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
         physicSystem.update(elapsedSeconds);
+        mapSystem.update();
 
-        Position playerPos = player.getComponent(PositionComponent.class).getPosition();
-        Box playerBB = player.getComponent(BoundingBoxComponent.class).getBox();
+        Position playerPos = player.getComponent(PositionComponent.class).position;
+        Box playerBB = player.getComponent(BoundingBoxComponent.class).box;
 
         Transform transform = new Transform();
         transform.translate(playerPos.multiply(-1));

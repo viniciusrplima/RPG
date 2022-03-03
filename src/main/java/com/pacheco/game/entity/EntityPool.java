@@ -1,10 +1,10 @@
 package com.pacheco.game.entity;
 
-import com.pacheco.game.entity.Entity;
-
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
+import java.util.PriorityQueue;
+import java.util.stream.Collectors;
 
 public class EntityPool {
     private HashMap<Long, Entity> entities;
@@ -13,8 +13,10 @@ public class EntityPool {
         entities = new HashMap<>();
     }
 
-    public List<Entity> getEntities() {
-        return new ArrayList<>(entities.values());
+    public Collection<Entity> getEntities() {
+        return entities.values().stream()
+                .sorted(Comparator.comparingInt(Entity::getzIndex))
+                .collect(Collectors.toList());
     }
 
     public Entity getEntity(Long id) {
@@ -23,5 +25,9 @@ public class EntityPool {
 
     public void addEntity(Entity entity) {
         entities.put(entity.getId(), entity);
+    }
+
+    public void clear() {
+        entities.clear();
     }
 }

@@ -20,20 +20,20 @@ public class PhysicSystem {
         for (Entity entity1 : entityPool.getEntities()) {
             if (entity1.containsComponent(BoundingBoxComponent.class)) {
                 BoundingBoxComponent bbComponent1 = entity1.getComponent(BoundingBoxComponent.class);
-                Box box1 = bbComponent1.getBox()
-                            .add(entity1.getComponent(PositionComponent.class).getPosition());
+                Box box1 = bbComponent1.box
+                            .add(entity1.getComponent(PositionComponent.class).position);
 
                 for (Entity entity2 : entityPool.getEntities()) {
                     if (entity2.containsComponent(BoundingBoxComponent.class)) {
                         BoundingBoxComponent bbComponent2 = entity2.getComponent(BoundingBoxComponent.class);
-                        Box box2 = bbComponent2.getBox()
-                                .add(entity2.getComponent(PositionComponent.class).getPosition());
+                        Box box2 = bbComponent2.box
+                                .add(entity2.getComponent(PositionComponent.class).position);
 
                         if (box1.intersects(box2)) {
                             Position offset = calcOffset(box1, box2);
-                            if (bbComponent1.getType() == BoundingBoxType.DYNAMIC)
+                            if (bbComponent1.type == BoundingBoxType.DYNAMIC)
                                 entity1.getComponent(PositionComponent.class).move(offset);
-                            if (bbComponent2.getType() == BoundingBoxType.DYNAMIC)
+                            if (bbComponent2.type == BoundingBoxType.DYNAMIC)
                                 entity2.getComponent(PositionComponent.class).move(offset.multiply(-1));
                         }
                     }

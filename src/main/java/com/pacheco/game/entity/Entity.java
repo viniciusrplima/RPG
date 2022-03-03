@@ -6,14 +6,20 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class Entity {
-    private static Long lasId = 1L;
+    private static Long lastId = 1L;
 
     private Long id;
+    private int zIndex;
     private HashMap<Class<?>, Component> components;
 
     public Entity() {
-        id = lasId++;
+        this(0);
+    }
+
+    public Entity(int zIndex) {
+        id = lastId++;
         components = new HashMap<>();
+        this.zIndex = zIndex;
     }
 
     public Long getId() {
@@ -30,6 +36,10 @@ public class Entity {
 
     public void setComponent(Class<?> type, Component component) {
         components.put(type, component);
+    }
+
+    public int getzIndex() {
+        return zIndex;
     }
 
     @Override
