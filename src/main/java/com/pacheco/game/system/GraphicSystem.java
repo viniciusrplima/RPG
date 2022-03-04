@@ -33,22 +33,5 @@ public class GraphicSystem {
                 entity.getComponent(GraphicComponent.class).render(gc);
             }
         }
-
-        // render bounding box
-        /*transform.apply(gc);
-        for (Entity entity : entityPool.getEntities()) {
-            if (entity.containsComponent(GraphicComponent.class)) {
-                if (entity.containsComponent(PositionComponent.class) &&
-                        entity.containsComponent(BoundingBoxComponent.class)) {
-
-                    Box box = entity.getComponent(BoundingBoxComponent.class).getBox()
-                            .add(entity.getComponent(PositionComponent.class).getPosition());
-                    gc.setStroke(Color.GREEN);
-                    gc.setLineWidth(2.0f);
-                    gc.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top);
-                }
-            }
-        }*/
-
     }
 }

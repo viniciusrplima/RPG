@@ -41,7 +41,6 @@ public class MapSystem {
         }
         for (DoorModel destDoor : mapModel.doors) {
             if (destDoor.name.equals(doorModel.destinationDoor)) {
-                System.out.format("position: %.2f, %.2f\n", destDoor.playerPosition.x, destDoor.playerPosition.y);
                 player.getComponent(PositionComponent.class).position = destDoor.playerPosition.clone();
                 break;
             }
