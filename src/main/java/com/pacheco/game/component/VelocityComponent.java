@@ -25,4 +25,8 @@ public class VelocityComponent implements Component {
     public void right(double x) {
         velocity = new Vector2d(x, 0);
     }
+
+    public void stop() {
+        velocity = new Vector2d(0, 0);
+    }
 }

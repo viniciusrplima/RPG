@@ -15,9 +15,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
+import java.util.HashSet;
+
 public class Game {
 
     private Canvas canvas;
+    private HashSet<KeyCode> keyboard;
 
     private EntityPool entityPool;
     private GraphicSystem graphicSystem;
@@ -28,6 +31,7 @@ public class Game {
 
     public Game(Canvas canvas) {
         this.canvas = canvas;
+        this.keyboard = new HashSet<>();
     }
 
     public void start() {
@@ -51,6 +55,7 @@ public class Game {
 
     public void update(double elapsedSeconds) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        updateInput();
 
         physicSystem.update(elapsedSeconds);
         mapSystem.update();
@@ -73,11 +78,24 @@ public class Game {
                 playerBB.left, playerBB.top, playerBB.right, playerBB.bottom), 10, 40);
     }
 
+    public void updateInput() {
+        if (isKeyPressed(KeyCode.W)) player.getComponent(VelocityComponent.class).up(Constants.PLAYER_SPEED);
+        else if (isKeyPressed(KeyCode.S)) player.getComponent(VelocityComponent.class).down(Constants.PLAYER_SPEED);
+        else if (isKeyPressed(KeyCode.A)) player.getComponent(VelocityComponent.class).left(Constants.PLAYER_SPEED);
+        else if (isKeyPressed(KeyCode.D)) player.getComponent(VelocityComponent.class).right(Constants.PLAYER_SPEED);
+        else player.getComponent(VelocityComponent.class).stop();
+    }
+
+    public boolean isKeyPressed(KeyCode keyCode) {
+        return keyboard.contains(keyCode);
+    }
+
     public void keyboardInput(KeyEvent key) {
-        double speed = 250;
-        if (key.getCode() == KeyCode.W) player.getComponent(VelocityComponent.class).up(speed);
-        if (key.getCode() == KeyCode.S) player.getComponent(VelocityComponent.class).down(speed);
-        if (key.getCode() == KeyCode.A) player.getComponent(VelocityComponent.class).left(speed);
-        if (key.getCode() == KeyCode.D) player.getComponent(VelocityComponent.class).right(speed);
+        if (key.getEventType() == KeyEvent.KEY_PRESSED) {
+            keyboard.add(key.getCode());
+        }
+        if (key.getEventType() == KeyEvent.KEY_RELEASED) {
+            keyboard.remove(key.getCode());
+        }
     }
 }

@@ -43,6 +43,7 @@ public class App extends Application
         Scene scene = new Scene(new Group(canvas));
 
         scene.addEventHandler(KeyEvent.KEY_PRESSED, key -> game.keyboardInput(key));
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> game.keyboardInput(key));
 
         stage.setScene(scene);
         stage.setTitle(GAME_TITLE);
