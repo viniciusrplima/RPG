@@ -2,7 +2,9 @@ package com.pacheco.game.entity;
 
 import com.pacheco.game.component.Component;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class Entity {
@@ -24,6 +26,10 @@ public class Entity {
 
     public Long getId() {
         return id;
+    }
+
+    public Collection<Class<?>> getComponentTypes() {
+        return components.keySet();
     }
 
     public Boolean containsComponent(Class<?> type) {

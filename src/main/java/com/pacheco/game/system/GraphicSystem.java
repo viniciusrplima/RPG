@@ -22,16 +22,14 @@ public class GraphicSystem {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
 
-        for (Entity entity : entityPool.getEntities()) {
-            if (entity.containsComponent(GraphicComponent.class)) {
-                if (entity.containsComponent(PositionComponent.class)) {
-                    PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
-                    Position position = positionComponent.position;
-                    Transform posTransform = new Transform(transform).translate(position);
-                    posTransform.apply(gc);
-                }
-                entity.getComponent(GraphicComponent.class).render(gc);
+        for (Entity entity : entityPool.getEntitiesByComponent(GraphicComponent.class)) {
+            if (entity.containsComponent(PositionComponent.class)) {
+                PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
+                Position position = positionComponent.position;
+                Transform posTransform = new Transform(transform).translate(position);
+                posTransform.apply(gc);
             }
+            entity.getComponent(GraphicComponent.class).render(gc);
         }
     }
 }

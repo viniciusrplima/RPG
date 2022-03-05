@@ -49,15 +49,13 @@ public class MapSystem {
     }
 
     public void update() {
-        for (Entity entity : entityPool.getEntities()) {
-            if (entity.containsComponent(DoorComponent.class)) {
-                DoorComponent doorComponent = entity.getComponent(DoorComponent.class);
-                Box boundingBox = player.getComponent(BoundingBoxComponent.class)
-                        .box.add(player.getComponent(PositionComponent.class).position);
-                if (boundingBox.intersects(doorComponent.boundingBox)) {
-                    System.out.println("done");
-                    changeMap(doorComponent.doorModel);
-                }
+        for (Entity entity : entityPool.getEntitiesByComponent(DoorComponent.class)) {
+            DoorComponent doorComponent = entity.getComponent(DoorComponent.class);
+            Box boundingBox = player.getComponent(BoundingBoxComponent.class)
+                    .box.add(player.getComponent(PositionComponent.class).position);
+            if (boundingBox.intersects(doorComponent.boundingBox)) {
+                System.out.println("done");
+                changeMap(doorComponent.doorModel);
             }
         }
     }
