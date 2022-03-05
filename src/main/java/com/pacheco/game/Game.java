@@ -2,7 +2,7 @@ package com.pacheco.game;
 
 import com.pacheco.game.component.*;
 import com.pacheco.game.core.Box;
-import com.pacheco.game.core.Position;
+import com.pacheco.game.core.Vector2d;
 import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
@@ -39,9 +39,10 @@ public class Game {
         physicSystem = new PhysicSystem(entityPool);
 
         player = new Entity(9999999);
-        player.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.RED, 100, 100));
+        player.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.RED, 50, 50));
         player.setComponent(PositionComponent.class, new PositionComponent(250, 250));
-        player.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 100, 100));
+        player.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 50, 50));
+        player.setComponent(VelocityComponent.class, new VelocityComponent());
 
         mapSystem = new MapSystem(entityPool, player);
 
@@ -54,7 +55,7 @@ public class Game {
         physicSystem.update(elapsedSeconds);
         mapSystem.update();
 
-        Position playerPos = player.getComponent(PositionComponent.class).position;
+        Vector2d playerPos = player.getComponent(PositionComponent.class).position;
         Box playerBB = player.getComponent(BoundingBoxComponent.class).box;
 
         Transform transform = new Transform();
@@ -73,9 +74,10 @@ public class Game {
     }
 
     public void keyboardInput(KeyEvent key) {
-        if (key.getCode() == KeyCode.W) player.getComponent(PositionComponent.class).move(0, -25);
-        if (key.getCode() == KeyCode.S) player.getComponent(PositionComponent.class).move(0, 25);
-        if (key.getCode() == KeyCode.A) player.getComponent(PositionComponent.class).move(-25, 0);
-        if (key.getCode() == KeyCode.D) player.getComponent(PositionComponent.class).move(25, 0);
+        double speed = 250;
+        if (key.getCode() == KeyCode.W) player.getComponent(VelocityComponent.class).up(speed);
+        if (key.getCode() == KeyCode.S) player.getComponent(VelocityComponent.class).down(speed);
+        if (key.getCode() == KeyCode.A) player.getComponent(VelocityComponent.class).left(speed);
+        if (key.getCode() == KeyCode.D) player.getComponent(VelocityComponent.class).right(speed);
     }
 }

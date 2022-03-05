@@ -2,7 +2,7 @@ package com.pacheco.game.system;
 
 import com.pacheco.game.component.GraphicComponent;
 import com.pacheco.game.component.PositionComponent;
-import com.pacheco.game.core.Position;
+import com.pacheco.game.core.Vector2d;
 import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
@@ -25,7 +25,7 @@ public class GraphicSystem {
         for (Entity entity : entityPool.getEntitiesByComponent(GraphicComponent.class)) {
             if (entity.containsComponent(PositionComponent.class)) {
                 PositionComponent positionComponent = entity.getComponent(PositionComponent.class);
-                Position position = positionComponent.position;
+                Vector2d position = positionComponent.position;
                 Transform posTransform = new Transform(transform).translate(position);
                 posTransform.apply(gc);
             }

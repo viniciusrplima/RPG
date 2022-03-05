@@ -4,7 +4,6 @@ import com.pacheco.game.component.Component;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 public class Entity {
@@ -51,5 +50,17 @@ public class Entity {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Entity entity = (Entity) o;
+        return id.equals(entity.id);
     }
 }

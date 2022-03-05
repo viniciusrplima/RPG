@@ -16,7 +16,7 @@ public class Box {
         this.bottom = bottom;
     }
 
-    public Box add(Position position) {
+    public Box add(Vector2d position) {
         return new Box(left + position.x, top + position.y,
                 right + position.x, bottom + position.y);
     }
@@ -25,7 +25,7 @@ public class Box {
         return !(left > box.right || right < box.left || top > box.bottom || bottom < box.top);
     }
 
-    public Position center() {
-        return new Position((left + right) / 2, (top + bottom) / 2);
+    public Vector2d center() {
+        return new Vector2d((left + right) / 2, (top + bottom) / 2);
     }
 }

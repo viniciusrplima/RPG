@@ -27,7 +27,7 @@ public class Transform {
                 matrix[1][1], matrix[0][2], matrix[1][2]);
     }
 
-    public Transform translate(Position position) {
+    public Transform translate(Vector2d position) {
         return translate(position.x, position.y);
     }
 

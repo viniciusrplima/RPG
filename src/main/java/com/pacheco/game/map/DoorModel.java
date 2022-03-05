@@ -1,13 +1,13 @@
 package com.pacheco.game.map;
 
 import com.pacheco.game.core.Box;
-import com.pacheco.game.core.Position;
+import com.pacheco.game.core.Vector2d;
 
 public class DoorModel {
 
     public String name;
-    public Position position;
-    public Position playerPosition;
+    public Vector2d position;
+    public Vector2d playerPosition;
     public Box box;
     public String destinationMap;
     public String destinationDoor;

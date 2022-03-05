@@ -5,7 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.pacheco.game.SpritesHolder;
 import com.pacheco.game.component.DoorComponent;
 import com.pacheco.game.core.Box;
-import com.pacheco.game.core.Position;
+import com.pacheco.game.core.Vector2d;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
 import com.pacheco.game.util.ResourceUtil;
@@ -46,10 +46,10 @@ public class MapBuilder {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         MapModel mapModel = mapper.readValue(new File(mapModelPath), MapModel.class);
 
-        mapModel.playerInitialPos = new Position(mapModel.playerInitialPos.x * tileW, mapModel.playerInitialPos.y * tileH);
+        mapModel.playerInitialPos = new Vector2d(mapModel.playerInitialPos.x * tileW, mapModel.playerInitialPos.y * tileH);
         for (DoorModel door : mapModel.doors) {
-            door.position = new Position(door.position.x * tileW, door.position.y * tileH);
-            door.playerPosition = new Position(door.playerPosition.x * tileW, door.playerPosition.y * tileH);
+            door.position = new Vector2d(door.position.x * tileW, door.position.y * tileH);
+            door.playerPosition = new Vector2d(door.playerPosition.x * tileW, door.playerPosition.y * tileH);
             door.box = new Box(
                 door.position.x - door.box.left * tileW,
                 door.position.y - door.box.top * tileH,
