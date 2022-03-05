@@ -47,6 +47,7 @@ public class Game {
         player.setComponent(PositionComponent.class, new PositionComponent(250, 250));
         player.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 50, 50));
         player.setComponent(VelocityComponent.class, new VelocityComponent());
+        player.setComponent(StatusComponent.class, new StatusComponent(100, 85));
 
         mapSystem = new MapSystem(entityPool, player);
 
@@ -69,13 +70,17 @@ public class Game {
 
         graphicSystem.render(gc, transform);
 
-        // print player status
+        // render player status
         new Transform().apply(gc);
-        gc.setStroke(Color.BLACK);
-        gc.setLineWidth(1.0f);
-        gc.strokeText(String.format("Player Position: %.2f, %.2f", playerPos.x, playerPos.y), 10, 20);
-        gc.strokeText(String.format("Player BB: %.2f, %.2f, %.2f, %.2f",
-                playerBB.left, playerBB.top, playerBB.right, playerBB.bottom), 10, 40);
+        StatusComponent statusComponent = player.getComponent(StatusComponent.class);
+        double maxHealthBarWidth = 300;
+        double healthBarWidth = maxHealthBarWidth * statusComponent.health / statusComponent.maxHealth;
+        
+        gc.setLineWidth(10);
+        gc.setStroke(Color.RED);
+        gc.strokeLine(20, 20, maxHealthBarWidth + 20, 20);
+        gc.setStroke(Color.color(0.4f, 1.0f, 0.3f));
+        gc.strokeLine(20, 20, healthBarWidth + 20, 20);
     }
 
     public void updateInput() {
