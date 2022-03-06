@@ -36,11 +36,13 @@ public class AnimationLoader {
 
             String name = line;
             Animation.Action action = new Animation.Action();
+            action.timeout = 1.0f;
 
             line = animContentIterator.next();
             while(!line.equals("***")) {
                 if (line.trim().equals("definition")) action.definition = getDefinition(animContentIterator);
                 if (line.trim().equals("dimensions")) action.dimensions = getDimensions(animContentIterator);
+                if (line.trim().equals("timeout")) action.timeout = getTimeout(animContentIterator);
                 line = animContentIterator.next();
             }
 
@@ -48,6 +50,11 @@ public class AnimationLoader {
         }
 
         return new Animation(sprite, animationDefinition);
+    }
+
+    private static double getTimeout(Iterator<String> animContentIterator) {
+        String line = animContentIterator.next();
+        return Double.parseDouble(line);
     }
 
     private static Vector2d getDimensions(Iterator<String> animContentIterator) {

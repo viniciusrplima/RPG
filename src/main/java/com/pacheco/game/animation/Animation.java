@@ -13,10 +13,13 @@ public class Animation {
     public static class Action {
         public Vector2d dimensions;
         public List<Box> definition;
+        public double timeout;
     }
 
     private Image sprite;
     private HashMap<String, Action> animationDefinition;
+    private String actionName;
+    private double timeInSeconds;
 
     public Animation(Image sprite,
                      HashMap<String, Action> animationDefinition) {
@@ -24,9 +27,23 @@ public class Animation {
         this.animationDefinition = animationDefinition;
     }
 
-    public void render(GraphicsContext gc, String actionName, double completion) {
-        double scale = 3;
+    public double getTimeout(String actionName) {
+        return animationDefinition.get(actionName).timeout;
+    }
+
+    public void setAction(String actionName) {
+        this.actionName = actionName;
+        this.timeInSeconds = 0;
+    }
+
+    public void update(double elapsedSeconds) {
+        this.timeInSeconds += elapsedSeconds;
+    }
+
+    public void render(GraphicsContext gc, String actionName) {
         Action action = animationDefinition.get(actionName);
+        double completion = (timeInSeconds % action.timeout) / action.timeout;
+        double scale = 3;
         int step = ((int) Math.floor((action.definition.size() + 1) * completion)) % action.definition.size();
         Box actual = action.definition.get(step);
 

@@ -85,6 +85,8 @@ public class Game {
         else if (isKeyPressed(KeyCode.A)) player.left(Constants.PLAYER_SPEED);
         else if (isKeyPressed(KeyCode.D)) player.right(Constants.PLAYER_SPEED);
         else player.stop();
+
+        if (isKeyPressed(KeyCode.F)) player.attack();
     }
 
     public boolean isKeyPressed(KeyCode keyCode) {

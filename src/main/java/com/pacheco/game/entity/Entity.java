@@ -41,6 +41,7 @@ public class Entity {
 
     public void setComponent(Class<?> type, Component component) {
         components.put(type, component);
+        components.put(component.getClass(), component);
     }
 
     public int getzIndex() {

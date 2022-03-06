@@ -73,3 +73,52 @@ definition
 86 69 29 34
 ---
 ***
+
+ATTACK_DOWN
+timeout
+1.2
+dimensions
+32 35
+definition
+254 0 26 35
+280 0 32 35
+315 0 32 35
+---
+***
+
+ATTACK_UP
+timeout
+1.2
+dimensions
+32 35
+definition
+254 35 26 33
+280 35 26 33
+307 35 32 33
+---
+***
+
+
+ATTACK_RIGHT
+timeout
+1.2
+dimensions
+32 35
+definition
+254 67 36 35
+288 67 36 35
+324 67 36 35
+---
+***
+
+ATTACK_LEFT
+timeout
+1.2
+dimensions
+32 35
+definition
+291 67 -36 35
+324 67 -36 35
+360 67 -36 35
+---
+***
