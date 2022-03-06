@@ -38,10 +38,11 @@ public class NPCAnimationGraphicComponent implements GraphicComponent {
     public NPCState npcState;
     public double timeout;
 
-    public NPCAnimationGraphicComponent(String animationName) {
+    public NPCAnimationGraphicComponent(String animationName, double scale) {
         this.timeout = -1;
         this.npcState = DOWN;
         this.animation = AnimationLoader.load(animationName);
+        this.animation.setScale(scale);
     }
 
     public void enterTransition(NPCTransition npcTransition) {

@@ -18,17 +18,23 @@ public class Animation {
 
     private Image sprite;
     private HashMap<String, Action> animationDefinition;
+    private double scale;
     private String actionName;
     private double timeInSeconds;
 
     public Animation(Image sprite,
                      HashMap<String, Action> animationDefinition) {
         this.sprite = sprite;
+        this.scale = 1.0f;
         this.animationDefinition = animationDefinition;
     }
 
     public double getTimeout(String actionName) {
         return animationDefinition.get(actionName).timeout;
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 
     public void setAction(String actionName) {
@@ -43,7 +49,6 @@ public class Animation {
     public void render(GraphicsContext gc, String actionName) {
         Action action = animationDefinition.get(actionName);
         double completion = (timeInSeconds % action.timeout) / action.timeout;
-        double scale = 3;
         int step = ((int) Math.floor((action.definition.size() + 1) * completion)) % action.definition.size();
         Box actual = action.definition.get(step);
 

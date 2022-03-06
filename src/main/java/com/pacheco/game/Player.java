@@ -9,7 +9,7 @@ public class Player {
 
     public Player() {
         entity = new Entity(9999999);
-        entity.setComponent(GraphicComponent.class, new NPCAnimationGraphicComponent("knight"));
+        entity.setComponent(GraphicComponent.class, new NPCAnimationGraphicComponent("knight", 3.0f));
         entity.setComponent(PositionComponent.class, new PositionComponent(250, 250));
         entity.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 90, 90));
         entity.setComponent(VelocityComponent.class, new VelocityComponent());
