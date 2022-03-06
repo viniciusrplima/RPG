@@ -28,4 +28,8 @@ public class Box {
     public Vector2d center() {
         return new Vector2d((left + right) / 2, (top + bottom) / 2);
     }
+
+    public Box clone() {
+        return new Box(left, top, right, bottom);
+    }
 }

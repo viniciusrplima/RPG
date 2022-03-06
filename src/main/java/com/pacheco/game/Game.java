@@ -43,7 +43,7 @@ public class Game {
         physicSystem = new PhysicSystem(entityPool);
 
         player = new Entity(9999999);
-        player.setComponent(GraphicComponent.class, new BoxGraphicComponent(Color.RED, 50, 50));
+        player.setComponent(GraphicComponent.class, new AnimationComponent("knight"));
         player.setComponent(PositionComponent.class, new PositionComponent(250, 250));
         player.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 50, 50));
         player.setComponent(VelocityComponent.class, new VelocityComponent());
@@ -75,7 +75,7 @@ public class Game {
         StatusComponent statusComponent = player.getComponent(StatusComponent.class);
         double maxHealthBarWidth = 300;
         double healthBarWidth = maxHealthBarWidth * statusComponent.health / statusComponent.maxHealth;
-        
+
         gc.setLineWidth(10);
         gc.setStroke(Color.RED);
         gc.strokeLine(20, 20, maxHealthBarWidth + 20, 20);

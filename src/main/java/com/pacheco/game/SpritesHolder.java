@@ -1,9 +1,7 @@
 package com.pacheco.game;
 
+import com.pacheco.game.util.SpriteUtil;
 import javafx.scene.image.Image;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class SpritesHolder {
 
@@ -13,19 +11,13 @@ public class SpritesHolder {
     public static Image ROCK_BLOCK;
 
     public static void loadSprites() {
-        GRASS = loadSprite("src/main/resources/sprites/grass.png");
-        WOOD_BLOCK = loadSprite("src/main/resources/sprites/wood-block.png");
-        MUD = loadSprite("src/main/resources/sprites/mud.png");
-        ROCK_BLOCK = loadSprite("src/main/resources/sprites/rock-block.png");
+        GRASS = loadSprite("grass");
+        WOOD_BLOCK = loadSprite("wood-block");
+        MUD = loadSprite("mud");
+        ROCK_BLOCK = loadSprite("rock-block");
     }
 
-    private static Image loadSprite(String filename) {
-        try {
-            FileInputStream stream = new FileInputStream(filename);
-            return new Image(stream);
-        } catch (FileNotFoundException fnfe) {
-            System.out.println("Error opening image file: " + fnfe.getMessage());
-        }
-        return null;
+    private static Image loadSprite(String spriteName) {
+        return SpriteUtil.loadSprite(Constants.TILES_PATH + spriteName + ".png");
     }
 }
