@@ -1,11 +1,10 @@
 package com.pacheco.game;
 
 import com.pacheco.game.component.*;
-import com.pacheco.game.core.Box;
 import com.pacheco.game.core.Vector2d;
 import com.pacheco.game.core.Transform;
-import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
+import com.pacheco.game.system.AnimationSystem;
 import com.pacheco.game.system.GraphicSystem;
 import com.pacheco.game.system.MapSystem;
 import com.pacheco.game.system.PhysicSystem;
@@ -26,8 +25,9 @@ public class Game {
     private GraphicSystem graphicSystem;
     private PhysicSystem physicSystem;
     private MapSystem mapSystem;
+    private AnimationSystem animationSystem;
 
-    private Entity player;
+    private Player player;
 
     public Game(Canvas canvas) {
         this.canvas = canvas;
@@ -35,23 +35,19 @@ public class Game {
     }
 
     public void start() {
-        SpritesHolder.loadSprites();
+        Sprites.loadSprites();
 
         entityPool = new EntityPool();
 
         graphicSystem = new GraphicSystem(entityPool);
         physicSystem = new PhysicSystem(entityPool);
+        animationSystem = new AnimationSystem(entityPool);
 
-        player = new Entity(9999999);
-        player.setComponent(GraphicComponent.class, new AnimationComponent("knight"));
-        player.setComponent(PositionComponent.class, new PositionComponent(250, 250));
-        player.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 50, 50));
-        player.setComponent(VelocityComponent.class, new VelocityComponent());
-        player.setComponent(StatusComponent.class, new StatusComponent(100, 85));
+        player = new Player();
 
-        mapSystem = new MapSystem(entityPool, player);
+        mapSystem = new MapSystem(entityPool, player.getEntity());
 
-        entityPool.addEntity(player);
+        entityPool.addEntity(player.getEntity());
     }
 
     public void update(double elapsedSeconds) {
@@ -59,10 +55,10 @@ public class Game {
         updateInput();
 
         physicSystem.update(elapsedSeconds);
+        animationSystem.update(elapsedSeconds);
         mapSystem.update();
 
-        Vector2d playerPos = player.getComponent(PositionComponent.class).position;
-        Box playerBB = player.getComponent(BoundingBoxComponent.class).box;
+        Vector2d playerPos = player.getEntity().getComponent(PositionComponent.class).position;
 
         Transform transform = new Transform();
         transform.translate(playerPos.multiply(-1));
@@ -72,7 +68,7 @@ public class Game {
 
         // render player status
         new Transform().apply(gc);
-        StatusComponent statusComponent = player.getComponent(StatusComponent.class);
+        StatusComponent statusComponent = player.getEntity().getComponent(StatusComponent.class);
         double maxHealthBarWidth = 300;
         double healthBarWidth = maxHealthBarWidth * statusComponent.health / statusComponent.maxHealth;
 
@@ -84,11 +80,11 @@ public class Game {
     }
 
     public void updateInput() {
-        if (isKeyPressed(KeyCode.W)) player.getComponent(VelocityComponent.class).up(Constants.PLAYER_SPEED);
-        else if (isKeyPressed(KeyCode.S)) player.getComponent(VelocityComponent.class).down(Constants.PLAYER_SPEED);
-        else if (isKeyPressed(KeyCode.A)) player.getComponent(VelocityComponent.class).left(Constants.PLAYER_SPEED);
-        else if (isKeyPressed(KeyCode.D)) player.getComponent(VelocityComponent.class).right(Constants.PLAYER_SPEED);
-        else player.getComponent(VelocityComponent.class).stop();
+        if (isKeyPressed(KeyCode.W)) player.up(Constants.PLAYER_SPEED);
+        else if (isKeyPressed(KeyCode.S)) player.down(Constants.PLAYER_SPEED);
+        else if (isKeyPressed(KeyCode.A)) player.left(Constants.PLAYER_SPEED);
+        else if (isKeyPressed(KeyCode.D)) player.right(Constants.PLAYER_SPEED);
+        else player.stop();
     }
 
     public boolean isKeyPressed(KeyCode keyCode) {

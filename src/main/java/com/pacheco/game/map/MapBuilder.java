@@ -2,7 +2,7 @@ package com.pacheco.game.map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.pacheco.game.SpritesHolder;
+import com.pacheco.game.Sprites;
 import com.pacheco.game.component.DoorComponent;
 import com.pacheco.game.core.Box;
 import com.pacheco.game.core.Vector2d;
@@ -70,10 +70,10 @@ public class MapBuilder {
         int line = 0;
         for (int i = 0; i < mapString.length(); i++) {
             char c = mapString.charAt(i);
-            if (c == 'w') entityPool.addEntity(tileFactory.createSolid(SpritesHolder.WOOD_BLOCK, column, line));
-            if (c == 'r') entityPool.addEntity(tileFactory.createSolid(SpritesHolder.ROCK_BLOCK, column, line));
-            if (c == '.') entityPool.addEntity(tileFactory.createSurface(SpritesHolder.GRASS, column, line));
-            if (c == 'm') entityPool.addEntity(tileFactory.createSurface(SpritesHolder.MUD, column, line));
+            if (c == 'w') entityPool.addEntity(tileFactory.createSolid(Sprites.WOOD_BLOCK, column, line));
+            if (c == 'r') entityPool.addEntity(tileFactory.createSolid(Sprites.ROCK_BLOCK, column, line));
+            if (c == '.') entityPool.addEntity(tileFactory.createSurface(Sprites.GRASS, column, line));
+            if (c == 'm') entityPool.addEntity(tileFactory.createSurface(Sprites.MUD, column, line));
 
             if (c == '\n') {
                 line++;

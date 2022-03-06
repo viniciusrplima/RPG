@@ -4,19 +4,20 @@ import com.pacheco.game.animation.Animation;
 import com.pacheco.game.animation.AnimationLoader;
 import javafx.scene.canvas.GraphicsContext;
 
-public class AnimationComponent implements GraphicComponent {
+public class AnimationGraphicComponent implements GraphicComponent {
 
-    Animation animation;
-    double time;
+    public Animation animation;
+    public String action;
+    public double time;
 
-    public AnimationComponent(String animationName) {
+    public AnimationGraphicComponent(String animationName) {
         this.time = 0.0f;
+        this.action = NPCStateComponent.NPCState.DOWN.name();
         this.animation = AnimationLoader.load(animationName);
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        time += 0.003f;
-        animation.render(gc, "WALK_DOWN", time);
+        animation.render(gc, action, time);
     }
 }

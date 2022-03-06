@@ -3,7 +3,7 @@ package com.pacheco.game;
 import com.pacheco.game.util.SpriteUtil;
 import javafx.scene.image.Image;
 
-public class SpritesHolder {
+public class Sprites {
 
     public static Image GRASS;
     public static Image WOOD_BLOCK;
