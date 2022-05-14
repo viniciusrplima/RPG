@@ -1,15 +1,20 @@
-package com.pacheco.game;
+package com.pacheco.game.entity;
 
+import com.pacheco.game.Constants;
 import com.pacheco.game.component.*;
-import com.pacheco.game.entity.Entity;
 
-public class Player {
+public class NPC {
 
     private Entity entity;
 
-    public Player() {
+    public NPC(String animationName, AIComponent aiComponent) {
+        this(animationName);
+        entity.setComponent(AIComponent.class, aiComponent);
+    }
+
+    public NPC(String animationName) {
         entity = new Entity(9999999);
-        entity.setComponent(GraphicComponent.class, new NPCAnimationGraphicComponent("knight", 3.0f));
+        entity.setComponent(GraphicComponent.class, new NPCAnimationGraphicComponent(animationName, 3.0f));
         entity.setComponent(PositionComponent.class, new PositionComponent(250, 250));
         entity.setComponent(BoundingBoxComponent.class, new BoundingBoxComponent(0, 0, 90, 90));
         entity.setComponent(VelocityComponent.class, new VelocityComponent());

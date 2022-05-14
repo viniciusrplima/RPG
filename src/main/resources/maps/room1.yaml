@@ -16,3 +16,8 @@ doors:
         bottom: 1
       destinationMap: room2
       destinationDoor: west1
+npcs:
+  - type: knight
+    position:
+      x: 30
+      y: 14

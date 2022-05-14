@@ -8,6 +8,7 @@ public class MapModel {
 
     public Vector2d playerInitialPos;
     public List<DoorModel> doors;
+    public List<NPCModel> npcs;
 
     public MapModel() {
     }

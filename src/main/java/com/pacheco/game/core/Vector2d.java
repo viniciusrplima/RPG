@@ -33,6 +33,11 @@ public class Vector2d {
         return subtract(position.x, position.y);
     }
 
+    public double distance(Vector2d position) {
+        Vector2d diff = position.subtract(this);
+        return Math.sqrt(diff.x * diff.x + diff.y * diff.y);
+    }
+
     public Vector2d clone() {
         return new Vector2d(x, y);
     }

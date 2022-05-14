@@ -22,7 +22,7 @@ public class Box {
     }
 
     public Boolean intersects(Box box) {
-        return !(left > box.right || right < box.left || top > box.bottom || bottom < box.top);
+        return !(left >= box.right || right <= box.left || top >= box.bottom || bottom <= box.top);
     }
 
     public Vector2d center() {

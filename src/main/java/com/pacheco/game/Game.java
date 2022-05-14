@@ -4,10 +4,8 @@ import com.pacheco.game.component.*;
 import com.pacheco.game.core.Vector2d;
 import com.pacheco.game.core.Transform;
 import com.pacheco.game.entity.EntityPool;
-import com.pacheco.game.system.AnimationSystem;
-import com.pacheco.game.system.GraphicSystem;
-import com.pacheco.game.system.MapSystem;
-import com.pacheco.game.system.PhysicSystem;
+import com.pacheco.game.entity.NPC;
+import com.pacheco.game.system.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -22,12 +20,14 @@ public class Game {
     private HashSet<KeyCode> keyboard;
 
     private EntityPool entityPool;
+
     private GraphicSystem graphicSystem;
     private PhysicSystem physicSystem;
     private MapSystem mapSystem;
     private AnimationSystem animationSystem;
+    private AISystem aiSystem;
 
-    private Player player;
+    private NPC player;
 
     public Game(Canvas canvas) {
         this.canvas = canvas;
@@ -39,13 +39,13 @@ public class Game {
 
         entityPool = new EntityPool();
 
+        player = new NPC("knight");
+
         graphicSystem = new GraphicSystem(entityPool);
         physicSystem = new PhysicSystem(entityPool);
         animationSystem = new AnimationSystem(entityPool);
-
-        player = new Player();
-
         mapSystem = new MapSystem(entityPool, player.getEntity());
+        aiSystem = new AISystem(entityPool, player.getEntity());
 
         entityPool.addEntity(player.getEntity());
     }
@@ -56,6 +56,7 @@ public class Game {
 
         physicSystem.update(elapsedSeconds);
         animationSystem.update(elapsedSeconds);
+        aiSystem.update();
         mapSystem.update();
 
         Vector2d playerPos = player.getEntity().getComponent(PositionComponent.class).position;

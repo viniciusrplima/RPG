@@ -3,11 +3,14 @@ package com.pacheco.game.map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.pacheco.game.Sprites;
+import com.pacheco.game.component.AIComponent;
 import com.pacheco.game.component.DoorComponent;
+import com.pacheco.game.component.PositionComponent;
 import com.pacheco.game.core.Box;
 import com.pacheco.game.core.Vector2d;
 import com.pacheco.game.entity.Entity;
 import com.pacheco.game.entity.EntityPool;
+import com.pacheco.game.entity.NPC;
 import com.pacheco.game.util.ResourceUtil;
 
 import java.io.File;
@@ -31,7 +34,16 @@ public class MapBuilder {
         buildFromFile(entityPool, mapsPath + mapName + ".map");
         MapModel mapModel = loadMapModelFromFile(mapsPath + mapName + ".yaml");
         loadMapDoors(entityPool, mapModel);
+        if (mapModel.npcs != null) loadMapNpcs(entityPool, mapModel);
         return mapModel;
+    }
+
+    private void loadMapNpcs(EntityPool entityPool, MapModel mapModel) {
+        for (NPCModel npcModel : mapModel.npcs) {
+            NPC npc = new NPC(npcModel.type, new AIComponent());
+            npc.getEntity().getComponent(PositionComponent.class).position = npcModel.position;
+            entityPool.addEntity(npc.getEntity());
+        }
     }
 
     private void loadMapDoors(EntityPool entityPool, MapModel mapModel) {
@@ -56,6 +68,11 @@ public class MapBuilder {
                 door.position.x + (door.box.right + 1) * tileW,
                 door.position.y + (door.box.bottom + 1) * tileH
             );
+        }
+        if (mapModel.npcs != null) {
+            for (NPCModel npcModel : mapModel.npcs) {
+                npcModel.position = new Vector2d(npcModel.position.x * tileW, npcModel.position.y * tileH);
+            }
         }
         return mapModel;
     }

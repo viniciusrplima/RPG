@@ -29,7 +29,11 @@ public class EntityPool {
     }
 
     public List<Entity> getEntitiesByComponent(Class<?> componentType) {
-        return classEntities.get(componentType);
+        if (classEntities.containsKey(componentType)) {
+            return classEntities.get(componentType);
+        } else {
+            return List.of();
+        }
     }
 
     public void clear() {

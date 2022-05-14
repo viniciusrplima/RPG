@@ -76,7 +76,7 @@ definition
 
 ATTACK_DOWN
 timeout
-1.2
+0.5
 dimensions
 32 35
 definition
@@ -88,7 +88,7 @@ definition
 
 ATTACK_UP
 timeout
-1.2
+0.5
 dimensions
 32 35
 definition
@@ -101,7 +101,7 @@ definition
 
 ATTACK_RIGHT
 timeout
-1.2
+0.5
 dimensions
 32 35
 definition
@@ -113,7 +113,7 @@ definition
 
 ATTACK_LEFT
 timeout
-1.2
+0.5
 dimensions
 32 35
 definition

@@ -54,7 +54,6 @@ public class MapSystem {
             Box boundingBox = player.getComponent(BoundingBoxComponent.class)
                     .box.add(player.getComponent(PositionComponent.class).position);
             if (boundingBox.intersects(doorComponent.boundingBox)) {
-                System.out.println("done");
                 changeMap(doorComponent.doorModel);
             }
         }
